@@ -201,18 +201,12 @@ namespace osu.Game.Rulesets.Catch
 
         public override DifficultyCalculator CreateDifficultyCalculator(IWorkingBeatmap beatmap) => new CatchDifficultyCalculator(RulesetInfo, beatmap);
 
-        public override ISkin? CreateSkinTransformer(ISkin skin, IBeatmap beatmap)
-        {
-            switch (skin)
-            {
-                case LegacySkin:
-                    return new CatchLegacySkinTransformer(skin);
-
-                case ArgonSkin:
-                    return new CatchArgonSkinTransformer(skin);
-            }
-
-            return null;
+        public override ISkin? CreateSkinTransformer(ISkin skin, IBeatmap beatmap) {
+            return skin switch {
+                LegacySkin => new CatchLegacySkinTransformer(skin),
+                ArgonSkin => new CatchArgonSkinTransformer(skin),
+                _ => null
+            };
         }
 
         public override PerformanceCalculator CreatePerformanceCalculator() => new CatchPerformanceCalculator();
